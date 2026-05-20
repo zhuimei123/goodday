@@ -47,7 +47,7 @@ class FileTransferService : Service() {
                 putExtra(EXTRA_REMOTE_PATH, remotePath)
                 putExtra(EXTRA_LOCAL_PATH, localPath)
             }
-            context.startForegroundService(intent)
+            startServiceCompatible(context, intent)
         }
 
         fun startUpload(context: Context, serverIp: String, shareName: String, remotePath: String, localPath: String) {
@@ -58,7 +58,7 @@ class FileTransferService : Service() {
                 putExtra(EXTRA_REMOTE_PATH, remotePath)
                 putExtra(EXTRA_LOCAL_PATH, localPath)
             }
-            context.startForegroundService(intent)
+            startServiceCompatible(context, intent)
         }
 
         fun startDelete(context: Context, serverIp: String, shareName: String, remotePath: String) {
@@ -68,7 +68,15 @@ class FileTransferService : Service() {
                 putExtra(EXTRA_SHARE_NAME, shareName)
                 putExtra(EXTRA_REMOTE_PATH, remotePath)
             }
-            context.startForegroundService(intent)
+            startServiceCompatible(context, intent)
+        }
+
+        private fun startServiceCompatible(context: Context, intent: Intent) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent)
+            } else {
+                context.startService(intent)
+            }
         }
     }
 

@@ -2,12 +2,13 @@ package com.lanshare.explorer.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Environment
 import androidx.preference.PreferenceManager
 
 /**
  * 应用设置管理
  */
-class SettingsManager(context: Context) {
+class SettingsManager(private val context: Context) {
 
     private val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -40,9 +41,8 @@ class SettingsManager(context: Context) {
     var downloadPath: String
         get() = prefs.getString(
             KEY_DOWNLOAD_PATH,
-            android.os.Environment.getExternalStoragePublicDirectory(
-                android.os.Environment.DIRECTORY_DOWNLOADS
-            ).absolutePath + "/LanShare"
+            (context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)?.absolutePath
+                ?: context.filesDir.absolutePath) + "/LanShare"
         ) ?: ""
         set(value) = prefs.edit().putString(KEY_DOWNLOAD_PATH, value).apply()
 

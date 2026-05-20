@@ -9,7 +9,6 @@ import java.net.InetSocketAddress
 import java.net.NetworkInterface
 import java.net.Socket
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.Semaphore
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
@@ -50,7 +49,26 @@ class LanScanner {
         } catch (e: Exception) {
             Log.e(TAG, "获取本机网络信息失败", e)
         }
-        return null
+        
+        // 备用方案：尝试连接到8.8.8.8以获取本机IP
+        return getLocalNetworkFallback()
+    }
+
+    private fun getLocalNetworkFallback(): Pair<String, String>? {
+        return try {
+            val socket = Socket()
+            try {
+                socket.connect(InetSocketAddress("8.8.8.8", 53), 1000)
+                val localIp = socket.localAddress.hostAddress ?: return null
+                val subnet = getSubnetPrefix(localIp)
+                if (subnet != null) Pair(localIp, subnet) else null
+            } finally {
+                socket.close()
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "备用获取网络信息方案失败", e)
+            null
+        }
     }
 
     private fun getSubnetPrefix(ip: String): String? {
@@ -76,7 +94,6 @@ class LanScanner {
             val totalHosts = 254
             val scanned = AtomicInteger(0)
             val foundDevices = ConcurrentHashMap<String, LanDevice>()
-            val semaphore = Semaphore(SCAN_CONCURRENCY)
 
             val scanJobs = (1..254).map { hostId ->
                 async {
@@ -87,7 +104,6 @@ class LanScanner {
                     }
 
                     try {
-                        semaphore.acquire()
                         if (isSmbPortOpen(targetIp)) {
                             val hostName = resolveHostName(targetIp)
                             val device = LanDevice(
@@ -101,12 +117,15 @@ class LanScanner {
                     } catch (ignored: Exception) {
                     } finally {
                         updateProgress(callback, scanned.incrementAndGet(), totalHosts)
-                        semaphore.release()
                     }
                 }
             }
 
-            scanJobs.awaitAll()
+            // 分批执行，避免过多并发
+            scanJobs.chunked(SCAN_CONCURRENCY).forEach { batch ->
+                batch.awaitAll()
+            }
+
             val deviceList = foundDevices.values.toList()
             withContext(Dispatchers.Main) {
                 callback.onScanComplete(deviceList)
