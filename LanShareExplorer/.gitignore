@@ -1,0 +1,23 @@
+# Gradle build files
+.gradle/
+build/
+**/build/
+
+# Local SDK configuration
+local.properties
+
+# Android Studio
+.idea/
+*.iml
+
+# Build outputs
+app/build/
+
+# Misc
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# Prevent committing IDE & SDK artifacts
+LanShareExplorer.zip

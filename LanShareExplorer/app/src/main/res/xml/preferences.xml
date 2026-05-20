@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- SMB认证设置 -->
+    <PreferenceCategory android:title="SMB认证">
+
+        <EditTextPreference
+            android:key="smb_username"
+            android:title="默认用户名"
+            android:summary="连接SMB共享时使用的默认用户名"
+            android:defaultValue="guest"
+            android:dialogTitle="用户名" />
+
+        <EditTextPreference
+            android:key="smb_password"
+            android:title="默认密码"
+            android:summary="连接SMB共享时使用的默认密码"
+            android:defaultValue=""
+            android:dialogTitle="密码" />
+
+        <SwitchPreferenceCompat
+            android:key="auto_guest_connect"
+            android:title="自动匿名连接"
+            android:summary="发现设备时自动使用匿名方式连接"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <!-- 扫描设置 -->
+    <PreferenceCategory android:title="扫描设置">
+
+        <EditTextPreference
+            android:key="scan_timeout"
+            android:title="扫描超时"
+            android:summary="扫描每个IP的超时时间（毫秒）"
+            android:defaultValue="1000"
+            android:dialogTitle="超时时间(ms)"
+            android:inputType="number" />
+
+    </PreferenceCategory>
+
+    <!-- 下载设置 -->
+    <PreferenceCategory android:title="下载设置">
+
+        <EditTextPreference
+            android:key="download_path"
+            android:title="下载路径"
+            android:summary="文件下载保存的本地路径"
+            android:defaultValue=""
+            android:dialogTitle="下载路径" />
+
+    </PreferenceCategory>
+
+    <!-- 显示设置 -->
+    <PreferenceCategory android:title="显示设置">
+
+        <SwitchPreferenceCompat
+            android:key="show_hidden_files"
+            android:title="显示隐藏文件"
+            android:summary="显示以点号开头的隐藏文件和文件夹"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">局域网共享</string>
+    <string name="scan_network">扫描网络</string>
+    <string name="stop_scan">停止扫描</string>
+    <string name="scanning">正在扫描局域网...</string>
+    <string name="no_devices">未发现共享设备</string>
+    <string name="no_files">文件夹为空</string>
+    <string name="connect">连接</string>
+    <string name="disconnect">断开连接</string>
+    <string name="download">下载</string>
+    <string name="upload">上传</string>
+    <string name="delete">删除</string>
+    <string name="rename">重命名</string>
+    <string name="new_folder">新建文件夹</string>
+    <string name="refresh">刷新</string>
+    <string name="settings">设置</string>
+    <string name="manual_connect">手动连接</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="guest_access">匿名访问</string>
+    <string name="server_ip">服务器IP地址</string>
+    <string name="confirm_delete">确认删除</string>
+    <string name="confirm_delete_msg">确定要删除 "%s" 吗？此操作不可撤销。</string>
+    <string name="download_started">开始下载</string>
+    <string name="download_complete">下载完成</string>
+    <string name="download_failed">下载失败</string>
+    <string name="upload_started">开始上传</string>
+    <string name="upload_complete">上传完成</string>
+    <string name="upload_failed">上传失败</string>
+    <string name="connection_failed">连接失败</string>
+    <string name="auth_required">需要认证</string>
+    <string name="file_details">文件详情</string>
+
+    <!-- 设置 -->
+    <string name="pref_smb_auth">SMB认证</string>
+    <string name="pref_smb_username">默认用户名</string>
+    <string name="pref_smb_password">默认密码</string>
+    <string name="pref_scan">扫描设置</string>
+    <string name="pref_scan_timeout">扫描超时</string>
+    <string name="pref_download">下载设置</string>
+    <string name="pref_download_path">下载路径</string>
+    <string name="pref_display">显示设置</string>
+    <string name="pref_show_hidden">显示隐藏文件</string>
+    <string name="pref_auto_guest">自动匿名连接</string>
+</resources>

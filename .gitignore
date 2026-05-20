@@ -1,0 +1,7 @@
+# Workspace files
+.vscode/
+staged.txt
+unstaged.txt
+
+# Extracted archive artifact
+LanShareExplorer.zip
