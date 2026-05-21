@@ -1,0 +1,7 @@
+[submodule "SMBExplorer"]
+	path = SMBExplorer
+	url = https://github.com/Sentaroh/SMBExplorer
+
+[submodule "SambaLite"]
+	path = SambaLite
+	url = https://github.com/egdels/SambaLite
