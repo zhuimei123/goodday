@@ -1,0 +1,42 @@
+name: Android Release Build
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: LanShareExplorer
+    env:
+      ANDROID_SDK_ROOT: ${{ github.workspace }}/android-sdk
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/LanShareExplorer/gradle/wrapper/gradle-wrapper.properties','**/LanShareExplorer/gradle.properties','**/LanShareExplorer/settings.gradle') }}
+
+      - name: Make gradlew executable
+        run: chmod +x ./LanShareExplorer/gradlew
+
+      - name: Clean
+        run: ./gradlew clean
+
+      - name: Build Release APK/AAB
+        run: ./gradlew assembleRelease
